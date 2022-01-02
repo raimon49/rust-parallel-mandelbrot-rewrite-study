@@ -1,12 +1,14 @@
 extern crate num;
 extern crate image;
 extern crate crossbeam;
+extern crate rayon;
 use num::Complex;
 use std::str::FromStr;
 use image::ColorType;
 use image::png::PNGEncoder;
 use std::fs::File;
 use std::io::Write;
+use rayon::prelude::*;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -32,36 +34,25 @@ fn main() {
     // マクロ呼び出しvec![v; n]で長さnのベクタを作り、vで初期化
     let mut pixels = vec![0; bounds.0 * bounds.1];
 
-
-    // 並列処理化のためコメントアウトして下の処理と置き換え
-    // render(&mut pixels, bounds, upper_left, lower_right);
-    let threads = 8;
-    let rows_per_band = bounds.1 / threads + 1;
+    // 水平の帯に `pixels` を分割したスライスのスコープ
     {
-        let bands: Vec<&mut [u8]> = pixels.chunks_mut(rows_per_band * bounds.0).collect();
-        // クロージャ呼び出し
-        // 引数の型はRustコンパイラが型推論するため不要
-        crossbeam::scope(|spawner| {
-            for (i, band) in bands.into_iter().enumerate() {
-                let top = rows_per_band * i;
-                let height = band.len() / bounds.0;
-                let band_bounds = (bounds.0, height);
-                let band_upper_left = pixel_to_point(bounds,
-                                                     (0, top),
-                                                     upper_left,
-                                                     lower_right);
-                let band_lower_right = pixel_to_point(bounds,
-                                                      (bounds.0, top + height),
-                                                      upper_left,
-                                                      lower_right);
+        let bands: Vec<(usize, &mut [u8])> = pixels
+            .chunks_mut(bounds.0)
+            .enumerate()
+            .collect();
 
-                // 引数なしのクロージャ実行
-                // キーワードmoveは、このクロージャ内部で利用する変数の所有権を取得することを表明している
-                spawner.spawn(move || {
-                    render(band, band_bounds, band_upper_left, band_lower_right);
-                });
-            }
-        });
+        // 用意したタスクbandsを並列イテレータに変換して .weight_max() でCPUを重く消費するヒントを与えて実行
+        bands.into_par_iter()
+            .weight_max()
+            .for_each(|(i, band)| {
+                let top = i;
+                let band_bounds = (bounds.0, 1);
+                let band_upper_left = pixel_to_point(bounds, (0, top),
+                                                     upper_left, lower_right);
+                let band_lower_right = pixel_to_point(bounds, (bounds.0, top + 1),
+                                                      upper_left, lower_right);
+                render(band, band_bounds, band_upper_left, band_lower_right);
+            });
     }
 
     write_image(&args[1], &pixels, bounds)
