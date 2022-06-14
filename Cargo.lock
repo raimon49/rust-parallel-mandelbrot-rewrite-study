@@ -81,6 +81,15 @@ dependencies = [
 
 [[package]]
 name = "crossbeam-channel"
+version = "0.4.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "crossbeam-utils 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "maybe-uninit 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "crossbeam-channel"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
@@ -155,6 +164,16 @@ name = "crossbeam-utils"
 version = "0.6.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
+ "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "crossbeam-utils"
+version = "0.7.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "autocfg 1.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "cfg-if 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -275,6 +294,7 @@ name = "mandelbrot-rewrite"
 version = "0.1.0"
 dependencies = [
  "crossbeam 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "crossbeam-channel 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "crossbeam-utils 0.8.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "image 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.42 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -606,6 +626,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum color_quant 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3d7b894f5411737b7867f4827955924d7c254fc9f4d91a6aad6b097804b1018b"
 "checksum crossbeam 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)" = "d7408247b1b87f480890f28b670c5f8d9a8a4274833433fe74dc0dfd46d33650"
 "checksum crossbeam-channel 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "7b85741761b7f160bc5e7e0c14986ef685b7f8bf9b7ad081c60c604bb4649827"
+"checksum crossbeam-channel 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)" = "b153fe7cbef478c567df0f972e02e6d736db11affe43dfc9c56a9374d1adfb87"
 "checksum crossbeam-channel 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)" = "06ed27e177f16d65f0f0c22a213e17c696ace5dd64b14258b52f9417ccb52db4"
 "checksum crossbeam-deque 0.5.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7792c4a9b5a4222f654e3728a3dd945aacc24d2c3a1a096ed265d80e4929cb9a"
 "checksum crossbeam-deque 0.8.1 (registry+https://github.com/rust-lang/crates.io-index)" = "6455c0ca19f0d2fbf751b908d5c55c1f5cbc65e03c4225427254b46890bdde1e"
@@ -614,6 +635,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum crossbeam-epoch 0.9.5 (registry+https://github.com/rust-lang/crates.io-index)" = "4ec02e091aa634e2c3ada4a392989e7c3116673ef0ac5b72232439094d73b7fd"
 "checksum crossbeam-utils 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)" = "677d453a17e8bd2b913fa38e8b9cf04bcdbb5be790aa294f2389661d72036015"
 "checksum crossbeam-utils 0.6.6 (registry+https://github.com/rust-lang/crates.io-index)" = "04973fa96e96579258a5091af6003abde64af786b860f18622b82e026cca60e6"
+"checksum crossbeam-utils 0.7.2 (registry+https://github.com/rust-lang/crates.io-index)" = "c3c7c73a2d1e9fc0886a08b93e98eb643461230d5f1925e4036204d5f2e261a8"
 "checksum crossbeam-utils 0.8.8 (registry+https://github.com/rust-lang/crates.io-index)" = "0bf124c720b7686e3c2663cf54062ab0f68a88af2fb6a030e87e30bf721fcb38"
 "checksum deflate 0.7.20 (registry+https://github.com/rust-lang/crates.io-index)" = "707b6a7b384888a70c8d2e8650b3e60170dfc6a67bb4aa67b6dfca57af4bedb4"
 "checksum deque 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)" = "a694dae478589798d752c7125542f8a5ae8b6e59476172baf2eed67357bdfa27"
